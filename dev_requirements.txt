@@ -1,1 +1,2 @@
 robin_stocks==1.5.0
+pytest==6.2.2
