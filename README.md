@@ -59,10 +59,9 @@ WIP
 
 ### TO DOs:
 
-1. Add configuration.py file to set ticker constants for instruments to trade as well as timeframe to trade and order size
-2. - Add function to pull historical data for desired tickers from Robinhood's historical data
-   - Add functions to clean and organize the historical data into a nice numpy array
-   - Use the sklearn train and test split to split the data for training
-3. Add deep_learning.py with the first neural network architecture
+1. Finish tests for Robin_Pipeline class.
+2. Set the setter method to be used for setting an instance variable in
+Robin Pipeline's init method.
+3. Write new test file for authentication class
 
 
