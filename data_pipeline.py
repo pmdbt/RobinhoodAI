@@ -21,8 +21,8 @@ class Robin_Pipeline(object):
     """
 
 
-    def __init__(self, ticker_list: list, needs_fractional: bool) -> None:
-        self.tickers = ticker_list
+    def __init__(self, tickers: list, needs_fractional: bool) -> None:
+        self.tickers = tickers
         self.needs_fractional = needs_fractional
 
 
@@ -33,7 +33,7 @@ class Robin_Pipeline(object):
         self.tickers = tickers
 
 
-    @static_method
+    @staticmethod
     def check_ticker(tickers: list) -> dict or None:
         """
         method used to check if a list of tickers exists on robinhood and can actually
@@ -66,9 +66,9 @@ class Robin_Pipeline(object):
         """
         tradability = check_ticker(self.tickers)
         if self.needs_fractional == False:
-            tradable_tickers = [for ticker in tradability if tradable_tickers.get(ticker).get('tradable') == True]
+            tradable_tickers = [ticker for ticker in tradability if tradable_tickers.get(ticker).get('tradable') == True]
         else:
-            tradable_tickers = [for ticker in tradability
+            tradable_tickers = [ticker for ticker in tradability
                                  if tradable_tickers.get(ticker).get('tradable') == True
                                  and tradable_tickers.get(ticker).get('fractional_tradability') == True]
         return tradable_tickers
