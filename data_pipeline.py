@@ -22,15 +22,39 @@ class Robin_Pipeline(object):
 
 
     def __init__(self, tickers: list, needs_fractional: bool) -> None:
-        self.tickers = tickers
-        self.needs_fractional = needs_fractional
+        self.set_tickers(tickers=tickers)
+        self.set_needs_fractional(needs_fractional)
 
 
     def set_tickers(self, tickers: list) -> None:
         """
-        method to mutate the object variable-tickers
+        method to mutate the object variable-tickers, only accepts list dtype
+        input
         """
-        self.tickers = tickers
+        if tickers:
+            if not isinstance(tickers, list):
+                raise TypeError(f"""the input for tickers is type {type(tickers)}
+                                 and not a list, which is not allowed. please
+                                 use a list of tickers instead. exiting...""")
+            else:
+                self.tickers = [ticker.upper() for ticker in tickers]
+        else:
+            raise ValueError(f"""the input for tickers is {tickers} of type \
+            {type(tickers)} and not a list, which is not allowed. please\
+            use a list of strings for tickers. exiting...""")
+
+
+    def set_needs_fractional(self, needs_fractional: bool) -> None:
+        """
+        method to mutate the object variable-needs_fractional. Only accepts
+        bool dtype
+        """
+        if isinstance(needs_fractional, bool):
+            self.needs_fractional = needs_fractional
+        else:
+            raise TypeError(f"""needs_fractional needs to be type bool in\
+                            set_needs_fractional, but was type\
+                            {type(needs_fractional)} instead.""")
 
 
     @staticmethod
@@ -40,13 +64,29 @@ class Robin_Pipeline(object):
         be traded or not.
         """
         results = api.stocks.get_instruments_by_symbols(inputSymbols=tickers)
+        print(results)
         if results:
             tradability = {}
             for ticker_result in results:
                 tradability[ticker_result.get('symbol')] = {
-                    'tradable': ticker_result.get('tradable'),
+                    'tradable': ticker_result.get('tradeable'),
                     'fractional_tradability': ticker_result.get('fractional_tradability')
                 }
+            # checks if tradable and fractional_tradability have the right values
+            for key in tradability:
+                for sub_key in tradability[key]:
+                    value = tradability[key][sub_key]
+                    if sub_key == 'tradable':
+                        if not isinstance(value, bool):
+                            raise TypeError(f"""The allowed values for
+                            tradability is only bool True or False values. The
+                            value for {sub_key} is {value} of type {type(value)}.""")
+                    elif sub_key == 'fractional_tradability':
+                        if not isinstance(value, str):
+                            raise TypeError(f"""The allowed values for
+                            fractional_tradability is only bool True or False
+                            values. The value for {sub_key} is {value} of type
+                            {type(value)}.""")
             return tradability
         else:
             logging.info(f"""
