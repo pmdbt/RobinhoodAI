@@ -60,8 +60,6 @@ WIP
 ### TO DOs:
 
 1. Finish tests for Robin_Pipeline class.
-2. Set the setter method to be used for setting an instance variable in
-Robin Pipeline's init method.
-3. Write new test file for authentication class
+2. Write new test file for authentication class
 
 
