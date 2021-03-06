@@ -7,7 +7,8 @@ import configuration as config
 
 """
 Classes for all the data pipelines include ticker data from Robinhood, but
-also external data from 3rd party sources.
+also external data from 3rd party sources. Currently, Robinhood does not
+require account authentication to ping their pipeline APIs.
 """
 
 # logging config
@@ -104,13 +105,13 @@ class Robin_Pipeline(object):
         list is edited to remove those tickers that cannot be traded. If all tickers cannot be
         traded, then the list becomes empty and no trades will be executed.
         """
-        tradability = check_ticker(self.tickers)
+        tradability = self.check_ticker(self.tickers)
         if self.needs_fractional == False:
-            tradable_tickers = [ticker for ticker in tradability if tradable_tickers.get(ticker).get('tradable') == True]
+            tradable_tickers = [ticker for ticker in tradability if tradability.get(ticker).get('tradable') == True]
         else:
             tradable_tickers = [ticker for ticker in tradability
-                                 if tradable_tickers.get(ticker).get('tradable') == True
-                                 and tradable_tickers.get(ticker).get('fractional_tradability') == True]
+                                 if tradability.get(ticker).get('tradable') == True
+                                 and tradability.get(ticker).get('fractional_tradability') == 'tradable']
         return tradable_tickers
 
 
@@ -124,3 +125,12 @@ class Robin_Pipeline(object):
         logging.info("Setting new tickers...")
         self.set_tickers(tickers=new_tickers)
 
+
+    def finalize_tickers(self) -> None:
+        """
+        Method to set the self.tickers variable to tickers that have passed
+        the filtering criteria based on whether they're tradable and if they
+        are fractionally tradable.
+        """
+        tradable_tickers = self.filter_tickers()
+        self.set_tickers(tickers=tradable_tickers)

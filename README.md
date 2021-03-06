@@ -59,7 +59,7 @@ WIP
 
 ### TO DOs:
 
-1. Finish tests for Robin_Pipeline class.
-2. Write new test file for authentication class
+1. Write new test file for authentication class
+2. Add methods to get historical data from Robinhood API for a given ticker.
 
 
