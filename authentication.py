@@ -28,7 +28,7 @@ class Authentication(object):
         logging.info('logging in to robinhood now...')
         login = api.login(creds.get('username'), creds.get('password'))
 
-    
+
     def logout(self):
         """
         Method to logout of current robinhood session
@@ -57,6 +57,7 @@ class Authentication(object):
         password = config.get('default', 'password')
         creds = {
                 'username': username,
-                'password': password 
+                'password': password
                 }
         return creds
+
