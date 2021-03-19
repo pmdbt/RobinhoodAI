@@ -26,7 +26,7 @@ class Authentication(object):
         """
         creds = self.fetch_credentials()
         logging.info('logging in to robinhood now...')
-        login = api.login(creds.get('username'), creds.get('password'))
+        api.login(creds.get('username'), creds.get('password'))
 
 
     def logout(self):
