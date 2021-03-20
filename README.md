@@ -59,7 +59,7 @@ WIP
 
 ### TO DOs:
 
-1. Write new test file for authentication class
-2. Add methods to get historical data from Robinhood API for a given ticker.
+1. Convert ticker data storage from list of dictionaries into pandas dataframes
+2. Optimize dataframe and see if numpy arrays might work better
 
 

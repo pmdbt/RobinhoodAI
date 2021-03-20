@@ -65,7 +65,6 @@ class Robin_Pipeline(object):
         be traded or not.
         """
         results = api.stocks.get_instruments_by_symbols(inputSymbols=tickers)
-        print(results)
         if results:
             tradability = {}
             for ticker_result in results:
@@ -134,3 +133,13 @@ class Robin_Pipeline(object):
         """
         tradable_tickers = self.filter_tickers()
         self.set_tickers(tickers=tradable_tickers)
+
+    @staticmethod
+    def query_historical_data(ticker: str, interval: str, span: str) -> list:
+        """
+        Method to query to historical data for a single stock or a list of stocks
+        Returns a list of dictionaries
+        """
+        query_results = api.stocks.get_stock_historicals(ticker, interval=interval, span=span)
+        return query_results
+
