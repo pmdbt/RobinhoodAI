@@ -134,12 +134,32 @@ class Robin_Pipeline(object):
         tradable_tickers = self.filter_tickers()
         self.set_tickers(tickers=tradable_tickers)
 
-    @staticmethod
-    def query_historical_data(ticker: str, interval: str, span: str) -> list:
+
+    def query_historical_data(self, ticker: str, interval: str, span: str) -> list:
         """
         Method to query to historical data for a single stock or a list of stocks
         Returns a list of dictionaries
         """
         query_results = api.stocks.get_stock_historicals(ticker, interval=interval, span=span)
         return query_results
+
+
+    def to_dataframes(self, interval: str, span: str) -> None:
+        """
+        Method to convert lists of dictionaries of historical ticker data into pandas dataframes
+        """
+        dict_storage = {}
+        for ticker in self.tickers:
+            query_results = self.query_historical_data(ticker, interval=interval, span=span)
+            if query_results:
+                dict_storage[ticker] = pd.DataFrame.from_records(query_results, index='begins_at')
+            else:
+                logging.warning(f"""The ticker symbole {ticker} is not returning valid data in to_dataframes()\n
+                it is returning: {query_results}""")
+                continue
+
+        if dict_storage:
+            self.historical_data = dict_storage
+        else:
+            raise TypeError(f"""dict_storage in to_dataframes() cannot be empty or None.\nIt is: {dict_storage}""")
 

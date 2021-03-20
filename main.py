@@ -2,6 +2,7 @@ import logging
 import authentication as auth
 from data_pipeline import Robin_Pipeline
 import configuration as config
+import pprint
 
 # logging config
 logging.basicConfig(format='%(levelname)s: main.py %(message)s',
@@ -19,10 +20,8 @@ if __name__ == "__main__":
     pipeline.finalize_tickers()
     logging.info(f"""Final list of tickers based on trading requirements are:\n{pipeline.tickers}""")
     # query historical data
-    data_storage = {}
-    for ticker in pipeline.tickers:
-        historical_data = pipeline.query_historical_data(ticker=ticker, interval='day', span='month')
-        data_storage[ticker] = historical_data
+    pipeline.to_dataframes(interval='day', span='month')
+    pprint.pprint(pipeline.historical_data)
     # logout
     auth.logout()
 
