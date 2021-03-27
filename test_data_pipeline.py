@@ -1,5 +1,6 @@
 import pytest
 from data_pipeline import Robin_Pipeline
+from authentication import Authentication
 
 
 """
@@ -185,4 +186,3 @@ def test_filter_tickers():
         test_tickers list: {frac_tickers}\n
         ticker: {item}\n
         """
-    
