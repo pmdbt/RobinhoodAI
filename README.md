@@ -59,7 +59,7 @@ WIP
 
 ### TO DOs:
 
+1. Finish methods for Buy_Dips class
 1. Optimize dataframe and see if numpy arrays might work better
-2. Write tests for new methods in data_pipeline.py
 
 
