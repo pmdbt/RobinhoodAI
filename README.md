@@ -59,7 +59,7 @@ WIP
 
 ### TO DOs:
 
-1. Finish methods for Buy_Dips class
-1. Optimize dataframe and see if numpy arrays might work better
+1. Add method to select closing price and iterate through dict of ticker data
+2. Optimize dataframe and see if numpy arrays might work better
 
 

@@ -1,4 +1,5 @@
 import logging
+import pandas as pd
 
 
 class Buy_Dips(object):
@@ -13,22 +14,14 @@ class Buy_Dips(object):
         ticker_data = ticker_data
 
 
-    def price_direction(self, new: float, old: float) -> str:
+    def __price_direction(self, ticker_price_df: object, period: int) -> object:
         """
-        Method to check if the direction of a stock's movement is up or down given
-        two price points that are consecutive in a specific timeframe. new is
-        most recent price, t, and old is t-1, but 1 can be weekly, daily, or some
-        other arbitrary time period.
+        Using pandas diff to find the difference between each iterative row
+        given a value for the time-period.
         """
-        if isinstance(new, float) and isinstance(old, float):
-            if new > old:
-                return 'up'
-            elif new < old:
-                return 'down'
-            else:
-                return 'flat'
-        else:
-            raise TypeError(f"""The new and old paramters have to be type float\n
-                            They are currently:\n
-                            new: {type(new)}\n
-                            old: {type(old)}\n""")
+        diff_pd = ticker_price_df.diff(periods=period, axis=0)
+        # diff always produces a nan row for the first row, so remove first
+        diff_pd = diff_pd.drop(index=diff_pd.index, axis=0, inplace=False)
+        return diff_pd
+
+
