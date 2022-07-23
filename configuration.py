@@ -14,4 +14,8 @@ BUY_ONLY_TICKERS = [
     'SPY',
     'IWM',
     'PHO',
+    'MSFT',
+    'HOOD',
+    'COIN',
+    'RIVN'
 ]

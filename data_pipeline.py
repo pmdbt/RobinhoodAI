@@ -25,6 +25,7 @@ class Robin_Pipeline(object):
     def __init__(self, tickers: list, needs_fractional: bool) -> None:
         self.set_tickers(tickers=tickers)
         self.set_needs_fractional(needs_fractional)
+        self.historical_data = {}
 
 
     def set_tickers(self, tickers: list) -> None:

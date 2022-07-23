@@ -10,8 +10,10 @@ class Buy_Dips(object):
     """
     
 
-    def __init__(self, ticker_data: dict):
-        ticker_data = ticker_data
+    def __init__(self, ticker_data: dict, period: int):
+        self.ticker_data = ticker_data
+        self.directional_data = {}
+        self.diff_period = period
 
 
     def __price_direction(self, ticker_price_df: object, period: int) -> object:
@@ -24,4 +26,16 @@ class Buy_Dips(object):
         diff_pd = diff_pd.drop(index=diff_pd.index, axis=0, inplace=False)
         return diff_pd
 
-
+    def find_directional_movement(self) -> dict:
+        """
+        Use self.__price_direction() to find price directions for every ticker
+        selected iteratively and then return all price directions for each
+        ticker in a dictionary
+        """
+        directional_data = {}
+        for k, v self.ticker_data.items():
+            directional_data[k] = __price_direction(
+                ticker_price_df=v,
+                period=self.diff_period
+            )
+        return directional_data
