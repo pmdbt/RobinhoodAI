@@ -1,5 +1,6 @@
 import logging
 from data_pipeline import Robin_Pipeline
+import numpy as np
 import configuration as config
 
 
@@ -11,7 +12,44 @@ Classes for performing analysis on pipeline data
 logging.basicConfig(format='%(levelname)s: analysis.py %(message)s',
         level=config.LOGGING_LEVEL)
 
-class Directional_Analysis(object):
+# basic analysis class for inhertiance
+class Transform(object):
+    """
+    Class with methods to perform basic data manipulation such as spliting
+    dataframes or extracting columns of data etc
+    """
+    def __init__(self, ticker_data: dict):
+        if ticker_data:
+            self.ticker_data = ticker_data
+        else:
+            logging.warning(f"""
+                            The ticker_data dictionary is empty during
+                            initialization. Exiting for safety.
+                            """)
+            exit()
+
+
+    def __select_ticker_analysis(self, ticker_symbol: str) -> pd.DataFrame:
+        """
+        Method to extract the dataframe of data of a specific ticker from
+        a dictionary of tickers and dataframes.
+        """
+        return self.ticker_data[ticker_symbol]
+
+
+    def __extract_column(
+        self,
+        df: pd.DataFrame,
+        column_name: str,
+        dtype: str) -> np.ndarray:
+        """
+        Method to extract or choose series from a dataframe and return it as
+        a numpy array with diresired data type
+        """
+        return df[column_name].to_numpy(dtype=dtype)
+
+    
+class Directional_Analysis(Transform):
     """
     Class for analyzing the direction of price movements of asset prices
     between each row in a structured data set.
@@ -22,6 +60,7 @@ class Directional_Analysis(object):
         self.ticker_data = ticker_data
         self.directional_data = {}
         self.diff_period = period
+        self.summary_data = None
 
 
     def __price_direction(self, ticker_price_df: object, period: int) -> object:

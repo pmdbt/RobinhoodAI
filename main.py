@@ -22,11 +22,13 @@ if __name__ == "__main__":
     logging.info(f"""Final list of tickers based on trading requirements are:\n{pipeline.tickers}""")
     # query historical data
     pipeline.to_dataframes(interval='day', span='month')
+    for k, v in pipeline.historical_data.items():
+        print(v)
+        break
     """
     running directional analysis on one unit time period of trading data
     (can be 1H, 2H, 4H, daily, weekly etc)
     """
-    bot = Buy_Dips(ticker_data=pipeline.historical_data)
     # logout
     auth.logout()
 
