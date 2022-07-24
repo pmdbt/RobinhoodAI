@@ -163,4 +163,3 @@ class Robin_Pipeline(object):
             self.historical_data = dict_storage
         else:
             raise TypeError(f"""dict_storage in to_dataframes() cannot be empty or None.\nIt is: {dict_storage}""")
-

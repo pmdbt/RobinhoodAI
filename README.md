@@ -59,7 +59,5 @@ WIP
 
 ### TO DOs:
 
-1. Add method to select closing price and iterate through dict of ticker data
-2. Optimize dataframe and see if numpy arrays might work better
-
-
+- Optimize dataframe and see if numpy arrays might work better
+- Write unit tests for analysis.py
