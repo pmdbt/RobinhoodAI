@@ -59,5 +59,5 @@ WIP
 
 ### TO DOs:
 
-- Optimize dataframe and see if numpy arrays might work better
+- Finish directional analysis class and methods
 - Write unit tests for analysis.py
